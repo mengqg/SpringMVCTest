@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.springmvc04.part1.entity.User;
+import com.springmvc04.part1.service.NameOrPwdException;
 import com.sun.istack.internal.logging.Logger;
 
 
@@ -21,6 +23,11 @@ public class OracleUserDAO implements UserDAO, Serializable{
 	public OracleUserDAO() {
 		mLogger.info("初始化OracleUserDAO");
 	}
+
+	public OracleUserDAO(JDBCDataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+	
 	@Autowired
 	public void setDataSource(@Qualifier("jdbcDataSource") JDBCDataSource dataSource) {
 		mLogger.info("setDataSource");
@@ -51,9 +58,9 @@ public class OracleUserDAO implements UserDAO, Serializable{
 				user.setPhone(rs.getString("PHONE"));
 				user.setPwd(rs.getString("PWD"));
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw e;
+			throw new RuntimeException(e);
 		} finally {
 			if(rs != null) {
 				rs.close();

@@ -23,7 +23,7 @@
 	<util:properties id = "jdbcProps" location="classpath:db.properties"/>
 	
 	<!-- 注解扫描 -->
-	<context:component-scan base-package = "com.springmvc04.part1"/>
+	<context:component-scan base-package = "com.springmvc05.part1"/>
 	
 	<mvc:annotation-driven/>
 	
@@ -32,5 +32,35 @@
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value = ".jsp"></property>
 	</bean>
-	
+	<!-- 拦截器 -->
+	<!-- <mvc:interceptors>
+  		<mvc:interceptor>
+  			<mvc:mapping path="/spring/*"/>
+  			<mvc:exclude-mapping path="/login/*"/>
+  			<bean class="com.springmvc04.part1.interceptor.SomeInterceptor"/>
+  		</mvc:interceptor>
+  	</mvc:interceptors>
+  
+  	<mvc:interceptors>
+  		<mvc:interceptor>
+  			<mvc:mapping path="/**"/>
+  			<mvc:exclude-mapping path="/login/*"/>
+  			<bean class = "com.springmvc04.part1.interceptor.LoginInterceptor"/>
+  		</mvc:interceptor>
+  	</mvc:interceptors> -->
+  	
+  	<!-- 异常处理 -->
+  	<!-- <bean class=  "org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+  		定义异常处理页面获取异常信息的变量名为ex，默认名为exception
+  		<property name="exceptionAttribute" value = "ex"></property>
+  		<property name="exceptionMappings">
+  			<props>
+  				<prop key="java.lang.Exception">error</prop>
+  			</props>
+  		</property>
+  	</bean> -->
+  	<!-- <bean id = "exceptionHandler" class="com.springmvc04.part1.interceptor.MyMappingExceptionResolver"></bean> -->
+
+	<!-- springmvc05 -->
+	<bean id = "multipartResolver" class = "org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>
